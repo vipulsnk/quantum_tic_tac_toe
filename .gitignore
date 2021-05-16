@@ -1,0 +1,5 @@
+.vscode
+.ipynb_checkpoints
+basic.py
+tic-tac.ipynb
+core/__pycache__
