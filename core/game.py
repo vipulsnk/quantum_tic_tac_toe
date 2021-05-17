@@ -1,10 +1,11 @@
-import quantum
+from . import quantum
 
 
 class Game:
     players = 0
     circuit = None
     matrix = [["-", "-", "-"], ["-", "-", "-"], ["-", "-", "-"]]
+    turn = 0
 
     def __init__(self, players) -> None:
         self.players = players
@@ -20,15 +21,15 @@ class Game:
     def take_input(self):
         pos = input()
         if pos == "e":
-          exit(0)
+            exit(0)
         row = int(pos[0])
         col = int(pos[1])
         return row, col
 
     def start(self):
-        turn = 0
+        self.turn = 0
         while True:
-            if turn == 0:
+            if self.turn == 0:
                 print("Player 1's turn: ")
                 row, col = self.take_input()
                 self.matrix[row][col] = turn
@@ -37,9 +38,15 @@ class Game:
                 print("Player 2's turn: ")
                 row, col = self.take_input()
                 self.matrix[row][col] = turn
-                turn = 0
+                self.turn = 0
             self.game_status()
-            
+
+    def move(self, row, col):
+        self.matrix[row][col] = self.turn
+        if self.turn == 0:
+            self.turn = 1
+        else:
+            self.turn = 0
 
 
 def main():
@@ -48,4 +55,4 @@ def main():
     game.start()
 
 
-main()
+# main()

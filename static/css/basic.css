@@ -1,0 +1,36 @@
+body {
+  background-color: whitesmoke;
+}
+
+h1 {
+  color: black;
+  text-align: center;
+}
+
+.cell {
+  background-color: aqua;
+  height: 100px;
+  width: 100px;
+  border: 1px;
+  border-color: black;
+  border-style: dashed;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  height: 100px;
+  width: 300px;
+  /* background-color: orange; */
+}
+
+#matrix {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 150px;
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  width: 300px;
+  /* background-color: aquamarine; */
+}
