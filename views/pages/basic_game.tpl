@@ -5,9 +5,17 @@
 <script>
   function onMove(row, col) {
     console.log(row, col)
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
 
-    document.getElementById("turn").innerHTML = {{turn}}
-    document.getElementById(createCellId(row, col)).innerHTML = row+col
+    fetch("http://localhost:8080/move/1/1", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+    //document.getElementById("turn").innerHTML = {{turn}}
+    //document.getElementById(createCellId(row, col)).innerHTML = row + col
   }
 
   function createCellId(row, col) {
@@ -18,11 +26,16 @@
 
 
 <div class="stats">
+Stats
   <p id="turn">
     {{turn}}
   </p>
 </div>
 
+
+<div class="actions">
+<a href="http://localhost:8080/reset">Reset</a>
+</div>
 
 
 
@@ -30,9 +43,11 @@
   % for i, row in enumerate(matrix):
   <div class="row">
     % for j, cell in enumerate(row):
-    <div class="cell" onclick="onMove({{i}}, {{j}})" id="cell_{{i}}_{{j}}">
+    <a href="http://localhost:8080/move/{{i}}/{{j}}">
+    <div class="cell"  id="cell_{{i}}_{{j}}">
       {{cell}}
     </div>
+    </a>
     % end
   </div>
   % end

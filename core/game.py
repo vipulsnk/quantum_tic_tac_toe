@@ -48,6 +48,9 @@ class Game:
         else:
             self.turn = 0
 
+    def reset(self):
+        self.matrix = [["-", "-", "-"], ["-", "-", "-"], ["-", "-", "-"]]
+
 
 def main():
     game = Game(2)
