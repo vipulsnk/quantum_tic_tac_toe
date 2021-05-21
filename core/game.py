@@ -1,18 +1,20 @@
+from core.game_model import GameModel
 from . import quantum
 
 
 class Game:
     players = 0
     circuit = None
-    matrix = [["-", "-", "-"], ["-", "-", "-"], ["-", "-", "-"]]
+    data = None
     turn = 0
 
     def __init__(self, players) -> None:
         self.players = players
         self.circuit = quantum.create_state()
+        self.data = GameModel()
 
     def game_status(self):
-        for row in self.matrix:
+        for row in self.data.matrix:
             for cell in row:
                 print(cell, end=" ")
             print("")
@@ -32,24 +34,24 @@ class Game:
             if self.turn == 0:
                 print("Player 1's turn: ")
                 row, col = self.take_input()
-                self.matrix[row][col] = turn
+                self.data.matrix[row][col] = turn
                 turn = 1
             else:
                 print("Player 2's turn: ")
                 row, col = self.take_input()
-                self.matrix[row][col] = turn
+                self.data.matrix[row][col] = turn
                 self.turn = 0
             self.game_status()
 
     def move(self, row, col):
-        self.matrix[row][col] = self.turn
+        self.data.matrix[row][col].value = self.turn
         if self.turn == 0:
             self.turn = 1
         else:
             self.turn = 0
 
     def reset(self):
-        self.matrix = [["-", "-", "-"], ["-", "-", "-"], ["-", "-", "-"]]
+        self.data.reset()
 
 
 def main():

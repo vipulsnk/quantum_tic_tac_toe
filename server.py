@@ -29,7 +29,7 @@ def hello(name="World"):
 @route("/base/<name>")
 def base(name="World"):
     basic_game.game_status()
-    return template("pages/basic_game", turn=basic_game.turn , matrix = basic_game.matrix)
+    return template("pages/basic_game", turn=basic_game.turn , matrix = basic_game.data.matrix)
 
 
 @route("/reset")
@@ -40,7 +40,7 @@ def reset():
 @get('/move/<row:int>/<col:int>')
 def move(row, col):
   basic_game.move(row, col)
-  return template("pages/basic_game", turn=basic_game.turn , matrix = basic_game.matrix)
+  return template("pages/basic_game", turn=basic_game.turn , matrix = basic_game.data.matrix)
 
 
 run(host="localhost", port=8080, debug=True)
