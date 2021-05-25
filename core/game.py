@@ -16,7 +16,7 @@ class Game:
     def game_status(self):
         for row in self.data.matrix:
             for cell in row:
-                print(cell, end=" ")
+                print(cell.value, end=" ")
             print("")
         # quantum.draw_circuit(self.circuit)
 

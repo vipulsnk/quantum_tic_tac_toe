@@ -1,9 +1,4 @@
-<head>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
-<link type="text/css" href="/static/css/basic.css" rel="stylesheet">
-
-<h1>Welcome to Quantum Tic-Tac-Toe</h1>
+% include('pages/header.tpl', title="abcd")
 
 <script>
   let strategy = 0;
@@ -56,26 +51,24 @@
       strategy = document.getElementById('classical_b').value;
     }
     console.log(strategy)
-
   }
-// not working below jquery
-  $('#matrix a').click(function(event) {
-    // Remember the link href
-    var href = this.href;
-    console.log("i am getting called!")
 
-    // Don't follow the link
-    event.preventDefault();
+  $(document).ready(function(e) {
+    // your code here
+    $('.row a').click(function(event) {
+      alert("The paragraph was clicked.");
+      // Remember the link href
+      var href = this.href;
+      console.log("i am getting called!")
 
-    // Do the async thing
-    startSomeAsyncThing(function() {
-      // This is the completion callback for the asynchronous thing;
-      // go to the link
+      // Don't follow the link
+      event.preventDefault();
       window.location = "https://jquery.com/";
     });
-  });
-</script>
 
+  });
+
+</script>
 
 <div class="strategies">
 
@@ -94,23 +87,10 @@
 </div>
 
 
-<div class="actions">
-  <a href="http://localhost:8080/reset">Reset</a>
+<div class="actions" id="acting">
+  <a href="http://localhost:8080/reset" id="anch">Reset</a>
 </div>
 
 
 
-<div id="matrix">
-  % for i, row in enumerate(matrix):
-  <div class="row">
-    % for j, cell in enumerate(row):
-    <a href="http://localhost:8080/move/{{i}}/{{j}}">
-      <div class="cell" id="cell_{{i}}_{{j}}">
-        {{cell.value}}
-      </div>
-    </a>
-    % end
-  </div>
-  % end
-
-</div>
+% include('pages/game_view.tpl', matrix=matrix)
