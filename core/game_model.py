@@ -1,11 +1,12 @@
 class Cell:
-    value = None
-    strategy = None
+    value = "-"
+    strategy = ""
     self_ind = None
     superposed_ind = None
+    color_code = "#fff"
 
     def __init__(self, i, j) -> None:
-        self.value = -1
+        self.value = "-"
         self.self_ind = (i, j)
 
 
@@ -20,5 +21,8 @@ class GameModel:
     def reset(self):
         for i in range(3):
             for j in range(3):
-                self.matrix[i][j].value = -1
+                self.matrix[i][j].value = "-"
+                self.matrix[i][j].color_code = "#fff"
+                self.matrix[i][j].strategy = ""
+                self.matrix[i][j].superposed_ind = None
 

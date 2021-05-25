@@ -43,14 +43,32 @@ class Game:
                 self.turn = 0
             self.game_status()
 
-    def move(self, row, col):
+    def c_move(self, row, col, color):
         self.data.matrix[row][col].value = self.turn
+        self.data.matrix[row][col].color_code = color
+        self.data.matrix[row][col].strategy = "c"  # classical
+        if self.turn == 0:
+            self.turn = 1
+        else:
+            self.turn = 0
+
+    def q_move(self, row1, col1, row2, col2, color):
+        self.data.matrix[row1][col1].value = self.turn
+        self.data.matrix[row2][col2].value = self.turn
+        self.data.matrix[row1][col1].color_code = color
+        self.data.matrix[row2][col2].color_code = color
+        self.data.matrix[row1][col1].superposed_ind = (row2, col2)
+        self.data.matrix[row2][col2].superposed_ind = (row1, col1)
+        self.data.matrix[row1][col1].strategy = "q"  # quantum
+        self.data.matrix[row2][col2].strategy = "q"  # quantum
+
         if self.turn == 0:
             self.turn = 1
         else:
             self.turn = 0
 
     def reset(self):
+        self.turn = 0
         self.data.reset()
 
 

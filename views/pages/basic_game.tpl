@@ -2,6 +2,9 @@
 
 <script>
   let strategy = 0;
+  let cells_num = 0;
+  let first_loc = [];
+  let first_color = "";
 
   function onMove(row, col) {
     console.log(row, col)
@@ -55,26 +58,72 @@
 
   $(document).ready(function(e) {
     // your code here
+
     $('.row a').click(function(event) {
-      alert("The paragraph was clicked.");
+      event.preventDefault();
+
       // Remember the link href
       var href = this.href;
-      console.log("i am getting called!")
+      console.log("i am getting called!");
+      printStrategy();
 
-      // Don't follow the link
-      event.preventDefault();
-      window.location = "https://jquery.com/";
+
+      // check strategy
+      // if quantum, change the color of selected cell and update a variable cells_num to store that 1 cell is selected
+      // if cells_num == 2 shoot request
+      // else if classical, shoot request directly
+      console.log(event.target);
+      if (strategy == 0) {
+        console.log("Classical Strategy");
+        id = $(event.target).attr("id");
+        console.log(id);
+        var res = id.split("_");
+        console.log(res);
+        var loc = [res[1], res[2]];
+        var randomColor = Math.floor(Math.random() * 16777215).toString(16);
+        window.location = "http://localhost:8080/c_move/" + loc[0] + "/" + loc[1] +
+          "/" + randomColor;
+      }
+      if (strategy == 1) {
+        console.log("Quantum Strategy");
+        // console.log(event);
+
+        if (cells_num == 0) {
+          var randomColor = Math.floor(Math.random() * 16777215).toString(16);
+          $(event.delegateTarget).css("background-color", "#" + randomColor);
+          console.log("First location selected");
+          cells_num = 1;
+          console.log("Select one more location");
+          id = $(event.target).attr("id");
+          console.log(id);
+          var res = id.split("_");
+          console.log(res);
+          first_loc = [res[1], res[2]];
+          first_color = randomColor;
+        } else if (cells_num == 1) {
+          console.log("Second location selected");
+          $(event.delegateTarget).css("background-color", "#" + first_color);
+
+          cells_num = 2;
+          id = $(event.target).attr("id");
+          console.log(id);
+          var res = id.split("_");
+          console.log(res);
+          var second_loc = [res[1], res[2]];
+          window.location = "http://localhost:8080/q_move/" + first_loc[0] + "/" + first_loc[1] + "/" +
+            second_loc[0] + "/" + second_loc[1] + "/" + first_color;
+        }
+      }
+
     });
 
   });
-
 </script>
 
 <div class="strategies">
-
-  <input type="radio" id="quantum_b" name="strategy" value=1>
+  <input type="radio" id="quantum_b" name="strategy" value=1 >
   <label>Quantum</label>
-  <input type="radio" id="classical_b" name="strategy" value=0>
+  <input type="radio" id="classical_b" name="strategy" value=0 checked=true>
   <label>Classical</label><br>
   <button onclick="printStrategy()"> printStrategy </button>
 </div>
