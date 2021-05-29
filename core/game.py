@@ -1,3 +1,4 @@
+from qiskit import circuit
 from core.game_model import GameModel
 from . import quantum
 
@@ -7,6 +8,7 @@ class Game:
     circuit = None
     data = None
     turn = 0
+    total_qubits = 1
 
     def __init__(self, players) -> None:
         self.players = players
@@ -53,6 +55,11 @@ class Game:
             self.turn = 0
 
     def q_move(self, row1, col1, row2, col2, color):
+        quantum.create_superposed_position(
+            self.circuit, row1, col1, row2, col2, self.total_qubits
+        )
+        self.total_qubits += 1
+
         self.data.matrix[row1][col1].value = self.turn
         self.data.matrix[row2][col2].value = self.turn
         self.data.matrix[row1][col1].color_code = color
@@ -67,9 +74,16 @@ class Game:
         else:
             self.turn = 0
 
+        # create a qubit in state (0+1)/2, store index in matrix's corresponding cells
+
     def reset(self):
         self.turn = 0
+        self.total_qubits = 1
         self.data.reset()
+        self.circuit = quantum.create_state()
+
+    def update_circuit_diagram(self):
+        quantum.draw_circuit(self.circuit)
 
 
 def main():

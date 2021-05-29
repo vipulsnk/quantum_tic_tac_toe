@@ -36,6 +36,12 @@ def send_css(filename):
     return static_file(filename, root="static/css")
 
 
+@route("/static/img/<filename:re:.*\.jpeg>")
+def send_circuit(filename):
+    basic_game.update_circuit_diagram()
+    return static_file(filename, root="static/img")
+
+
 @route("/test/<name>")
 def hello(name="World"):
     return template("pages/hello_template", name=name)

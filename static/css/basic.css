@@ -54,6 +54,12 @@ h1 {
   width: fit-content;
   margin-right: 100px;
 }
+.circuit_diagram {
+  float: right;
+  width: fit-content;
+  margin-right: 300px;
+  text-align: center;
+}
 
 #matrix {
   margin-left: auto;

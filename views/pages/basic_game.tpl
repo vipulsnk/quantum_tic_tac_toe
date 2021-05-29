@@ -1,4 +1,4 @@
-% include('pages/header.tpl', title="abcd")
+% include('pages/header.tpl', title="Quantum Tic-Tac-Toe")
 
 <script>
   let strategy = 0;
@@ -121,7 +121,7 @@
 </script>
 
 <div class="strategies">
-  <input type="radio" id="quantum_b" name="strategy" value=1 >
+  <input type="radio" id="quantum_b" name="strategy" value=1>
   <label>Quantum</label>
   <input type="radio" id="classical_b" name="strategy" value=0 checked=true>
   <label>Classical</label><br>
@@ -138,6 +138,10 @@
 
 <div class="actions" id="acting">
   <a href="http://localhost:8080/reset" id="anch">Reset</a>
+</div>
+<div class="circuit_diagram">
+  <h3>Circuit</h3>
+  <img src="/static/img/circuit.jpeg" alt="circuit img">
 </div>
 
 
