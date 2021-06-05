@@ -5,6 +5,7 @@
   let cells_num = 0;
   let first_loc = [];
   let first_color = "";
+  let is_measure = false
 
   function onMove(row, col) {
     console.log(row, col)
@@ -12,6 +13,7 @@
       method: 'GET',
       redirect: 'follow'
     };
+
 
     fetch("http://localhost:8080/move/1/1", requestOptions)
       .then(response => response.text())
@@ -21,9 +23,11 @@
     //document.getElementById(createCellId(row, col)).innerHTML = row + col
   }
 
+
   function createCellId(row, col) {
     return "cell_" + row.toString() + "_" + col.toString()
   }
+
 
   function selectStrategy(btn, strat) {
     strategy = strat
@@ -47,6 +51,9 @@
 
   function printStrategy() {
     // console.log(strategy)
+    console.log("measure is: ")
+    console.log(is_measure)
+    console.log("strategy is: ")
 
     if (document.getElementById('quantum_b').checked) {
       strategy = document.getElementById('quantum_b').value;
@@ -67,12 +74,23 @@
       console.log("i am getting called!");
       printStrategy();
 
-
+      // check if want to measure
+      // measure else
       // check strategy
       // if quantum, change the color of selected cell and update a variable cells_num to store that 1 cell is selected
       // if cells_num == 2 shoot request
       // else if classical, shoot request directly
       console.log(event.target);
+      if (is_measure) {
+        console.log("Measuring")
+        id = $(event.target).attr("id");
+        console.log(id);
+        var res = id.split("_");
+        console.log(res);
+        var loc = [res[1], res[2]];
+        window.location = "http://localhost:8080/measure/" + loc[0] + "/" + loc[1];
+        return;
+      }
       if (strategy == 0) {
         console.log("Classical Strategy");
         id = $(event.target).attr("id");
@@ -118,6 +136,16 @@
     });
 
   });
+
+  function updateMeasure(element) {
+    is_measure = !is_measure
+    if (is_measure) {
+      element.style.backgroundColor = "#008CBA"
+    } else {
+      element.style.backgroundColor = "#4caf50"
+    }
+
+  }
 </script>
 
 <div class="strategies">
@@ -126,6 +154,7 @@
   <input type="radio" id="classical_b" name="strategy" value=0 checked=true>
   <label>Classical</label><br>
   <button onclick="printStrategy()"> printStrategy </button>
+  <button onclick="updateMeasure(this)" id="measure_button"> Measure </button>
 </div>
 
 <div class="stats">

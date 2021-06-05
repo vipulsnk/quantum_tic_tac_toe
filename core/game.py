@@ -55,7 +55,7 @@ class Game:
             self.turn = 0
 
     def q_move(self, row1, col1, row2, col2, color):
-        quantum.create_superposed_position(
+        qr_name = quantum.create_superposed_position(
             self.circuit, row1, col1, row2, col2, self.total_qubits
         )
         self.total_qubits += 1
@@ -68,6 +68,9 @@ class Game:
         self.data.matrix[row2][col2].superposed_ind = (row1, col1)
         self.data.matrix[row1][col1].strategy = "q"  # quantum
         self.data.matrix[row2][col2].strategy = "q"  # quantum
+        self.data.matrix[row1][col1].qr_name = qr_name  # quantum
+        self.data.matrix[row2][col2].qr_name = qr_name  # quantum
+            
 
         if self.turn == 0:
             self.turn = 1
@@ -84,6 +87,11 @@ class Game:
 
     def update_circuit_diagram(self):
         quantum.draw_circuit(self.circuit)
+    
+    def measure_state(self, row, col):
+        qr_name = self.data.matrix[row][col].qr_name
+        quantum.add_measure(self.circuit, qr_name)
+        self.update_circuit_diagram()
 
 
 def main():

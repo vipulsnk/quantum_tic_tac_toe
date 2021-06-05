@@ -20,7 +20,7 @@ h1 {
 
 .sup_script {
   vertical-align: super;
-  font-size: 35px !important; 
+  font-size: 35px !important;
 }
 
 .row {
@@ -89,4 +89,16 @@ a:hover {
   color: #228999;
   text-decoration: none;
 }
-
+ /* not working below button css*/
+button {
+  background-color: #4caf50; /* Green */
+  border: none; 
+  color: white;
+  padding: 7px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}

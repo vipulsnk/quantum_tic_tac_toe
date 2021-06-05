@@ -72,5 +72,13 @@ def q_move(row1, col1, row2, col2, color):
     return template(basic_page, turn=basic_game.turn, matrix=basic_game.data.matrix)
 
 
+@get("/measure/<row:int>/<col:int>")
+def measure(row, col):
+    basic_game.measure_state(row, col)
+    return template(basic_page, turn=basic_game.turn, matrix=basic_game.data.matrix)
+
+
+
+
 run(host="localhost", port=8080, debug=True)
 
