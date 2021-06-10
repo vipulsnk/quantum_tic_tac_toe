@@ -65,75 +65,78 @@
 
   $(document).ready(function(e) {
     // your code here
+    if ({{winner}} !== -1){
+    setTimeout(function() { alert("winner is " + {{winner}}); }, 500);
 
-    $('.row a').click(function(event) {
-      event.preventDefault();
+  }
+  $('.row a').click(function(event) {
+    event.preventDefault();
 
-      // Remember the link href
-      var href = this.href;
-      console.log("i am getting called!");
-      printStrategy();
+    // Remember the link href
+    var href = this.href;
+    console.log("i am getting called!");
+    printStrategy();
 
-      // check if want to measure
-      // measure else
-      // check strategy
-      // if quantum, change the color of selected cell and update a variable cells_num to store that 1 cell is selected
-      // if cells_num == 2 shoot request
-      // else if classical, shoot request directly
-      console.log(event.target);
-      if (is_measure) {
-        console.log("Measuring")
-        id = $(event.target).attr("id");
-        console.log(id);
-        var res = id.split("_");
-        console.log(res);
-        var loc = [res[1], res[2]];
-        window.location = "http://localhost:8080/measure/" + loc[0] + "/" + loc[1];
-        return;
-      }
-      if (strategy == 0) {
-        console.log("Classical Strategy");
-        id = $(event.target).attr("id");
-        console.log(id);
-        var res = id.split("_");
-        console.log(res);
-        var loc = [res[1], res[2]];
+    // check if want to measure
+    // measure else
+    // check strategy
+    // if quantum, change the color of selected cell and update a variable cells_num to store that 1 cell is selected
+    // if cells_num == 2 shoot request
+    // else if classical, shoot request directly
+    console.log(event.target);
+    if (is_measure) {
+      console.log("Measuring")
+      id = $(event.target).attr("id");
+      console.log(id);
+      var res = id.split("_");
+      console.log(res);
+      var loc = [res[1], res[2]];
+      window.location = "http://localhost:8080/measure/" + loc[0] + "/" + loc[1];
+      return;
+    }
+    if (strategy == 0) {
+      console.log("Classical Strategy");
+      id = $(event.target).attr("id");
+      console.log(id);
+      var res = id.split("_");
+      console.log(res);
+      var loc = [res[1], res[2]];
+      var randomColor = Math.floor(Math.random() * 16777215).toString(16);
+      window.location = "http://localhost:8080/c_move/" + loc[0] + "/" + loc[1] +
+        "/" + randomColor;
+    }
+    if (strategy == 1) {
+      console.log("Quantum Strategy");
+      // console.log(event);
+
+      if (cells_num == 0) {
         var randomColor = Math.floor(Math.random() * 16777215).toString(16);
-        window.location = "http://localhost:8080/c_move/" + loc[0] + "/" + loc[1] +
-          "/" + randomColor;
+        $(event.delegateTarget).css("background-color", "#" + randomColor);
+        console.log("First location selected");
+        cells_num = 1;
+        console.log("Select one more location");
+        id = $(event.target).attr("id");
+        console.log(id);
+        var res = id.split("_");
+        console.log(res);
+        first_loc = [res[1], res[2]];
+        first_color = randomColor;
+      } else if (cells_num == 1) {
+        console.log("Second location selected");
+        $(event.delegateTarget).css("background-color", "#" + first_color);
+
+        cells_num = 2;
+        id = $(event.target).attr("id");
+        console.log(id);
+        var res = id.split("_");
+        console.log(res);
+        var second_loc = [res[1], res[2]];
+        window.location = "http://localhost:8080/q_move/" + first_loc[0] + "/" + first_loc[1] + "/" +
+          second_loc[0] + "/" + second_loc[1] + "/" + first_color;
       }
-      if (strategy == 1) {
-        console.log("Quantum Strategy");
-        // console.log(event);
+    }
 
-        if (cells_num == 0) {
-          var randomColor = Math.floor(Math.random() * 16777215).toString(16);
-          $(event.delegateTarget).css("background-color", "#" + randomColor);
-          console.log("First location selected");
-          cells_num = 1;
-          console.log("Select one more location");
-          id = $(event.target).attr("id");
-          console.log(id);
-          var res = id.split("_");
-          console.log(res);
-          first_loc = [res[1], res[2]];
-          first_color = randomColor;
-        } else if (cells_num == 1) {
-          console.log("Second location selected");
-          $(event.delegateTarget).css("background-color", "#" + first_color);
-
-          cells_num = 2;
-          id = $(event.target).attr("id");
-          console.log(id);
-          var res = id.split("_");
-          console.log(res);
-          var second_loc = [res[1], res[2]];
-          window.location = "http://localhost:8080/q_move/" + first_loc[0] + "/" + first_loc[1] + "/" +
-            second_loc[0] + "/" + second_loc[1] + "/" + first_color;
-        }
-      }
-
-    });
+  });
 
   });
 
@@ -146,6 +149,10 @@
     }
 
   }
+
+  function simulate() {
+    window.location = "http://localhost:8080/simulate";
+  }
 </script>
 
 <div class="strategies">
@@ -155,12 +162,18 @@
   <label>Classical</label><br>
   <button onclick="printStrategy()"> printStrategy </button>
   <button onclick="updateMeasure(this)" id="measure_button"> Measure </button>
+  <button onclick="simulate()" id="simulate_button"> Simulate </button>
 </div>
 
 <div class="stats">
   Stats
   <p id="turn">
     Player {{turn+1}}'s Turn
+  </p>
+  <p id="winner">
+    % if not (winner == "-1"):
+    Winner is {{winner}}
+    % end
   </p>
 </div>
 

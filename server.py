@@ -51,7 +51,12 @@ def hello(name="World"):
 @route("/base/<name>")
 def base(name="World"):
     basic_game.game_status()
-    return template(basic_page, turn=basic_game.turn, matrix=basic_game.data.matrix)
+    return template(
+        basic_page,
+        turn=basic_game.turn,
+        matrix=basic_game.data.matrix,
+        winner=basic_game.winner,
+    )
 
 
 @route("/reset")
@@ -63,21 +68,45 @@ def reset():
 @get("/c_move/<row:int>/<col:int>/<color>")
 def c_move(row, col, color):
     basic_game.c_move(row, col, color)
-    return template(basic_page, turn=basic_game.turn, matrix=basic_game.data.matrix)
+    return template(
+        basic_page,
+        turn=basic_game.turn,
+        matrix=basic_game.data.matrix,
+        winner=basic_game.winner,
+    )
 
 
 @get("/q_move/<row1:int>/<col1:int>/<row2:int>/<col2:int>/<color>")
 def q_move(row1, col1, row2, col2, color):
     basic_game.q_move(row1, col1, row2, col2, color)
-    return template(basic_page, turn=basic_game.turn, matrix=basic_game.data.matrix)
+    return template(
+        basic_page,
+        turn=basic_game.turn,
+        matrix=basic_game.data.matrix,
+        winner=basic_game.winner,
+    )
 
 
 @get("/measure/<row:int>/<col:int>")
 def measure(row, col):
     basic_game.measure_state(row, col)
-    return template(basic_page, turn=basic_game.turn, matrix=basic_game.data.matrix)
+    return template(
+        basic_page,
+        turn=basic_game.turn,
+        matrix=basic_game.data.matrix,
+        winner=basic_game.winner,
+    )
 
 
+@get("/simulate")
+def simulate():
+    basic_game.simulate()
+    return template(
+        basic_page,
+        turn=basic_game.turn,
+        matrix=basic_game.data.matrix,
+        winner=basic_game.winner,
+    )
 
 
 run(host="localhost", port=8080, debug=True)

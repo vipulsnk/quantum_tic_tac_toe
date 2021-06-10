@@ -5,6 +5,7 @@ class Cell:
     superposed_ind = None
     color_code = "#fff"
     qr_name = ""
+    to_measure = False
 
     def __init__(self, i, j) -> None:
         self.value = "-"
@@ -27,4 +28,5 @@ class GameModel:
                 self.matrix[i][j].strategy = ""
                 self.matrix[i][j].superposed_ind = None
                 self.matrix[i][j].qr_name = ""
+                self.matrix[i][j].to_measure = False
 
