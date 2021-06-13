@@ -181,7 +181,7 @@ class Game:
             ):
                 self.winner = row0[i].value
                 return True
-            return False
+        return False
 
     def check_rows(self):
         for row in self.data.matrix:
@@ -192,7 +192,7 @@ class Game:
             ):
                 self.winner = row[0].value
                 return True
-            return False
+        return False
 
     def check_diag(self):
         row0 = self.data.matrix[0]
@@ -214,7 +214,9 @@ class Game:
             return True
 
     def check_winner(self):
+        self.game_status()
         if self.check_rows() or self.check_cols() or self.check_diag():
+            print("Winner found: ", self.winner)
             return True
         return False
 
