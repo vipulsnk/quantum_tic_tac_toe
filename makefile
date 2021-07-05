@@ -4,3 +4,6 @@ dev:
 	# conda activate quantum
 	@echo "Starting server..."
 	nodemon --exec "python " ./server.py 
+
+env:
+	conda env export --no-builds > environment.yml
