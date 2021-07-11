@@ -20,7 +20,7 @@ port = 8080
 
 @route("/hello/<name>")
 def name(name):
-    return template("<b>Hello {{name}}</b>!", name=name,host=host, port=str(port))
+    return template("<b>Hello {{name}}</b>!", name=name,)
 
 
 @route("/")
@@ -58,8 +58,6 @@ def base(name="World"):
         turn=basic_game.turn,
         matrix=basic_game.data.matrix,
         winner=basic_game.winner,
-        host=host,
-        port=str(port),
     )
 
 
@@ -77,8 +75,6 @@ def c_move(row, col, color):
         turn=basic_game.turn,
         matrix=basic_game.data.matrix,
         winner=basic_game.winner,
-        host=host,
-        port=str(port),
     )
 
 
@@ -90,8 +86,6 @@ def q_move(row1, col1, row2, col2, color):
         turn=basic_game.turn,
         matrix=basic_game.data.matrix,
         winner=basic_game.winner,
-        host=host,
-        port=str(port),
     )
 
 
@@ -103,8 +97,6 @@ def measure(row, col):
         turn=basic_game.turn,
         matrix=basic_game.data.matrix,
         winner=basic_game.winner,
-        host=host,
-        port=str(port),
     )
 
 
@@ -116,10 +108,8 @@ def simulate():
         turn=basic_game.turn,
         matrix=basic_game.data.matrix,
         winner=basic_game.winner,
-        host=host,
-        port=str(port),
     )
 
 
-run(host=host, port=str(port), debug=True)
+run(host="0.0.0.0", port=8080, debug=True, fast=True)
 

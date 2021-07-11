@@ -5,5 +5,9 @@ dev:
 	@echo "Starting server..."
 	nodemon --exec "python " ./server.py 
 
-env:
+create_envf:
 	conda env export --no-builds > environment.yml
+
+pip_inst:
+	pip install -r ./requirements.txt
+
