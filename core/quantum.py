@@ -15,7 +15,7 @@ def create_state():
 def draw_circuit(circuit):
     fig = circuit.draw(output="mpl")
     print(os.getcwd())
-    plt.savefig("./core/snaps/circuit.jpeg")
+    # plt.savefig("./core/snaps/circuit.jpeg")
     plt.savefig("./static/img/circuit.jpeg")
     plt.close(fig)
     # plt.close('all')

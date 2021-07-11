@@ -1,6 +1,7 @@
 % include('pages/header.tpl', title="Quantum Tic-Tac-Toe")
 
 <script>
+  let base_uri = window.location.origin
   let strategy = 0;
   let cells_num = 0;
   let first_loc = [];
@@ -91,7 +92,7 @@
       var res = id.split("_");
       console.log(res);
       var loc = [res[1], res[2]];
-      window.location = "http://localhost:8080/measure/" + loc[0] + "/" + loc[1];
+      window.location = base_uri + "/measure/" + loc[0] + "/" + loc[1];
       return;
     }
     if (strategy == 0) {
@@ -102,7 +103,7 @@
       console.log(res);
       var loc = [res[1], res[2]];
       var randomColor = Math.floor(Math.random() * 16777215).toString(16);
-      window.location = "http://localhost:8080/c_move/" + loc[0] + "/" + loc[1] +
+      window.location = base_uri + "/c_move/" + loc[0] + "/" + loc[1] +
         "/" + randomColor;
     }
     if (strategy == 1) {
@@ -131,7 +132,7 @@
         var res = id.split("_");
         console.log(res);
         var second_loc = [res[1], res[2]];
-        window.location = "http://localhost:8080/q_move/" + first_loc[0] + "/" + first_loc[1] + "/" +
+        window.location = base_uri + "/q_move/" + first_loc[0] + "/" + first_loc[1] + "/" +
           second_loc[0] + "/" + second_loc[1] + "/" + first_color;
       }
     }
@@ -151,7 +152,7 @@
   }
 
   function simulate() {
-    window.location = "http://localhost:8080/simulate";
+    window.location = base_uri + "/simulate";
   }
 </script>
 
@@ -160,7 +161,7 @@
   <label>Quantum</label>
   <input type="radio" id="classical_b" name="strategy" value=0 checked=true>
   <label>Classical</label><br>
-  <button onclick="printStrategy()"> printStrategy </button>
+
   <button onclick="updateMeasure(this)" id="measure_button"> Measure </button>
   <button onclick="simulate()" id="simulate_button"> Simulate </button>
 </div>
@@ -176,10 +177,15 @@
     % end
   </p>
 </div>
-
+<div class="instr">
+  Instructions
+  <ol>
+    <li> </li>
+  </ol>
+</div>
 
 <div class="actions" id="acting">
-  <a href="http://localhost:8080/reset" id="anch">Reset</a>
+  <a href="/reset" id="anch">Reset</a>
 </div>
 <div class="circuit_diagram">
   <h3>Circuit</h3>
