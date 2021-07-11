@@ -154,18 +154,32 @@
   function simulate() {
     window.location = base_uri + "/simulate";
   }
+  function reset() {
+    window.location = base_uri + "/reset";
+  }
 </script>
 
 <div class="strategies">
+  Strategies:
   <input type="radio" id="quantum_b" name="strategy" value=1>
   <label>Quantum</label>
   <input type="radio" id="classical_b" name="strategy" value=0 checked=true>
   <label>Classical</label><br>
-
+  Actions:
   <button onclick="updateMeasure(this)" id="measure_button"> Measure </button>
   <button onclick="simulate()" id="simulate_button"> Simulate </button>
+  <button onclick="reset()" id="reset_button"> Reset </button>
 </div>
-
+<div class="instr">
+  Instructions
+  <ol>
+    <li> Play in Classical strategy to get a feel of normal tic-tac-toe</li>
+    <li> On any move, select quantum strategy and select two cells</li>
+    <li> So you are at two positions simultaneously</li>
+    <li> To find out where you will collapse, click measure and select any one of the two selected cells</li>
+    <li> Now hit simulate</li>
+  </ol>
+</div>
 <div class="stats">
   Stats
   <p id="turn">
@@ -177,16 +191,9 @@
     % end
   </p>
 </div>
-<div class="instr">
-  Instructions
-  <ol>
-    <li> </li>
-  </ol>
-</div>
 
-<div class="actions" id="acting">
-  <a href="/reset" id="anch">Reset</a>
-</div>
+
+
 <div class="circuit_diagram">
   <h3>Circuit</h3>
   <img src="/static/img/circuit.jpeg" alt="circuit img">
